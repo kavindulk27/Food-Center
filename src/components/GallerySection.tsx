@@ -12,7 +12,7 @@ const PHOTOS = [
 
 export function GallerySection() {
     return (
-        <section id="gallery" className="py-20 bg-background relative overflow-hidden">
+        <section id="gallery" className="pt-32 pb-20 bg-background relative overflow-hidden">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
                 <div className="absolute top-1/4 -right-20 w-80 h-80 bg-primary rounded-full blur-[100px]" />
@@ -20,26 +20,24 @@ export function GallerySection() {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                    <div>
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-4xl md:text-5xl font-bold text-white mb-2"
-                        >
-                            <span className="text-primary">Our</span> Gallery
-                        </motion.h2>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="text-gray-400 text-lg"
-                        >
-                            A glimpse into our delicious world.
-                        </motion.p>
-                    </div>
+                <div className="text-center mb-16">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-4xl md:text-5xl font-bold text-white mb-2"
+                    >
+                        <span className="text-primary">Our</span> Gallery
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-gray-400 text-lg"
+                    >
+                        A glimpse into our delicious world.
+                    </motion.p>
                 </div>
 
                 {/* Photos Grid */}
