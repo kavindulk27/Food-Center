@@ -3,11 +3,14 @@ import { Menu, X, Phone, ShoppingCart } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { useCart } from '../context/CartContext';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { toggleCart, cartCount } = useCart();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,9 +20,29 @@ export function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const handleNavigation = (href: string) => {
+        setIsMobileMenuOpen(false);
+        if (href.startsWith('#')) {
+            if (location.pathname !== '/') {
+                navigate('/');
+                setTimeout(() => {
+                    const element = document.querySelector(href);
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            } else {
+                const element = document.querySelector(href);
+                element?.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            navigate(href);
+            window.scrollTo(0, 0);
+        }
+    };
+
     const navLinks = [
         { name: 'Home', href: '#home' },
         { name: 'Menu', href: '#menu' },
+        { name: 'Gallery', href: '/gallery' },
         { name: 'Contact', href: '#contact' },
     ];
 
@@ -34,29 +57,28 @@ export function Navbar() {
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
                 {/* Logo */}
-                {/* Logo */}
-                <a href="#home" className="flex items-center gap-3 group">
+                <Link to="/" className="flex items-center gap-3 group">
                     <img
                         src="/Untitled design (4).png"
                         alt="Kumanayaka Logo"
                         className="h-20 w-auto group-hover:scale-105 transition-transform"
                     />
                     <span className={clsx("text-2xl font-bold tracking-wide", "text-primary")}>Kumanayaka Food Center</span>
-                </a>
+                </Link>
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
-                        <a
+                        <button
                             key={link.name}
-                            href={link.href}
+                            onClick={() => handleNavigation(link.href)}
                             className={clsx(
                                 "font-medium transition-colors hover:text-primary",
                                 isScrolled ? "text-gray-200" : "text-white/90 hover:text-white"
                             )}
                         >
                             {link.name}
-                        </a>
+                        </button>
                     ))}
 
                     <button
@@ -97,14 +119,13 @@ export function Navbar() {
             {isMobileMenuOpen && (
                 <div className="md:hidden absolute top-full left-0 right-0 bg-card shadow-xl border-t border-white/10 p-4 flex flex-col gap-4 animate-in slide-in-from-top-2">
                     {navLinks.map((link) => (
-                        <a
+                        <button
                             key={link.name}
-                            href={link.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="text-gray-200 font-medium py-2 px-4 rounded-md hover:bg-white/5 hover:text-primary"
+                            onClick={() => handleNavigation(link.href)}
+                            className="text-gray-200 font-medium py-2 px-4 rounded-md hover:bg-white/5 hover:text-primary text-left"
                         >
                             {link.name}
-                        </a>
+                        </button>
                     ))}
                     <button
                         className="flex items-center gap-3 text-gray-200 font-medium py-2 px-4 rounded-md hover:bg-white/5 hover:text-primary w-full text-left"
