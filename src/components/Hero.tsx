@@ -1,4 +1,5 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Hero() {
     return (
@@ -6,65 +7,75 @@ export default function Hero() {
             id="home"
             className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
-            {/* Background with overlay */}
+            {/* Background Parallax Layer */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/75" />
-                <img
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/40 z-10" />
+                <motion.img
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
                     src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3"
                     alt="Authentic Sri Lankan cuisine"
-                    className="h-full w-full object-cover brightness-[0.65] contrast-[1.05]"
-                    loading="eager"
-                    fetchPriority="high"
+                    className="h-full w-full object-cover brightness-[0.6] contrast-[1.1] blur-[2px]"
                 />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 container mx-auto px-6 md:px-10 lg:px-16 text-center text-white">
-                <div className="max-w-4xl mx-auto">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 md:mb-8 drop-shadow-2xl">
-                        Freshly cooked,served with
-                        <br className="sm:hidden" />
-                        <span className="text-amber-400 inline-block mt-1 md:mt-3">_Love</span>
+            <div className="relative z-20 container mx-auto px-6 md:px-12 text-center text-white">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="max-w-5xl mx-auto"
+                >
+
+
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-tight mb-8">
+                        <span className="block text-white">Hungry?</span>
+                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+                            Order now!
+                        </span>
                     </h1>
 
-                    <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-light mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-                        Experience the soul of Sri Lanka through every bite
-                        <br className="hidden sm:inline" />
-                        <span className="text-amber-300/90 font-medium">
-                            Fried Rice · Kottu · Devilled Dishes · and more
+                    <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-light mb-12 max-w-3xl mx-auto leading-relaxed">
+                        📞 Hot & delicious food, just a call or click away!
+                        <span className="hidden sm:block mt-2 text-white/60 text-base">
+                            Fried Rice · Kottu · Devilled Dishes · Short Eats
                         </span>
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-5 md:gap-7">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.8 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                    >
                         <a
                             href="#menu"
-                            className="group relative inline-flex items-center gap-3 bg-amber-500 text-black px-9 py-5 rounded-full font-semibold text-lg shadow-lg shadow-amber-600/30 hover:shadow-amber-600/50 transition-all duration-300 hover:scale-105 active:scale-95"
+                            className="group relative flex items-center gap-3 bg-amber-500 text-black px-8 py-4 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] transition-all duration-300 hover:-translate-y-1"
                         >
-                            Explore Our Menu
-                            <ArrowRight
-                                size={22}
-                                className="transition-transform duration-300 group-hover:translate-x-1.5"
-                            />
+                            Explore Menu
+                            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         </a>
 
-                        <a
+                        <motion.a
                             href="https://wa.me/94779224653"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 text-white px-9 py-5 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30 active:scale-95"
+                            animate={{ scale: [1, 1.05, 1] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-all active:scale-95"
                         >
+                            <Phone className="w-5 h-5" />
                             Order via WhatsApp
-                        </a>
-                    </div>
-                </div>
+                        </motion.a>
+                    </motion.div>
+                </motion.div>
             </div>
 
-            {/* Optional subtle scroll indicator */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:block">
-                <div className="w-8 h-12 border-2 border-white/40 rounded-full flex items-center justify-center">
-                    <div className="w-1.5 h-3 bg-white/70 rounded-full animate-bounce" />
-                </div>
-            </div>
+            {/* Decorative Overlay Elements */}
+            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/80 to-transparent z-10" />
+            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-10" />
         </section>
     );
 }

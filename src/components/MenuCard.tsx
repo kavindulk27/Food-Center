@@ -1,11 +1,13 @@
 import type { MenuItem } from '../data/menu';
 import { ShoppingBag } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 interface MenuCardProps {
     item: MenuItem;
 }
 
 export function MenuCard({ item }: MenuCardProps) {
+    const { addToCart } = useCart();
     return (
         <div className="group bg-card rounded-2xl shadow-lg hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 overflow-hidden border border-white/5 hover:-translate-y-1 h-full flex flex-col">
             <div className="relative h-48 overflow-hidden shrink-0">
@@ -48,10 +50,18 @@ export function MenuCard({ item }: MenuCardProps) {
                 <p className="text-gray-400 text-sm mb-6 line-clamp-2">{item.description}</p>
                 <button
                     className="w-full bg-white/5 text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-primary hover:text-black transition-all active:scale-95 mt-auto"
-                    onClick={() => {/* Add to cart or order functionality would go here */ }}
+                    onClick={() => {
+                        addToCart({
+                            id: item.id,
+                            name: item.name,
+                            price: item.price,
+                            image: item.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80",
+                            category: item.category
+                        });
+                    }}
                 >
                     <ShoppingBag size={18} />
-                    Order Now
+                    Add to Cart
                 </button>
             </div>
         </div>

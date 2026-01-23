@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, ShoppingCart } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { useCart } from '../context/CartContext';
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { toggleCart, cartCount } = useCart();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -35,11 +37,11 @@ export function Navbar() {
                 {/* Logo */}
                 <a href="#home" className="flex items-center gap-3 group">
                     <img
-                        src="/logo.jpg"
+                        src="/Untitled design (4).png"
                         alt="Kumanayaka Logo"
-                        className="h-12 w-12 rounded-full border-2 border-primary group-hover:scale-105 transition-transform"
+                        className="h-20 w-auto group-hover:scale-105 transition-transform"
                     />
-                    <span className={clsx("text-2xl font-bold", "text-primary")}>Kumanayaka Food Center</span>
+                    <span className={clsx("text-2xl font-bold tracking-wide", "text-primary")}>Kumanayaka Food Center</span>
                 </a>
 
                 {/* Desktop Menu */}
@@ -56,6 +58,23 @@ export function Navbar() {
                             {link.name}
                         </a>
                     ))}
+
+                    <button
+                        onClick={toggleCart}
+                        className={clsx(
+                            "p-2 rounded-full transition-colors relative",
+                            isScrolled ? "text-white hover:bg-white/10" : "text-white/90 hover:bg-white/10"
+                        )}
+                        aria-label="Cart"
+                    >
+                        <ShoppingCart size={24} />
+                        {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 h-5 w-5 bg-primary text-black rounded-full text-[10px] flex items-center justify-center font-bold animate-in zoom-in">
+                                {cartCount}
+                            </span>
+                        )}
+                    </button>
+
                     <a
                         href="tel:0779224653"
                         className="flex items-center gap-2 bg-primary text-black px-5 py-2.5 rounded-full font-bold hover:bg-secondary hover:text-white transition-all active:scale-95 shadow-lg shadow-amber-500/20"
@@ -87,6 +106,23 @@ export function Navbar() {
                             {link.name}
                         </a>
                     ))}
+                    <button
+                        className="flex items-center gap-3 text-gray-200 font-medium py-2 px-4 rounded-md hover:bg-white/5 hover:text-primary w-full text-left"
+                        onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            toggleCart();
+                        }}
+                    >
+                        <div className="relative">
+                            <ShoppingCart size={20} />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-2 -right-2 h-4 w-4 bg-primary text-black rounded-full text-[10px] flex items-center justify-center font-bold">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </div>
+                        Cart
+                    </button>
                     <a
                         href="tel:0779224653"
                         className="flex items-center justify-center gap-2 bg-primary text-black px-5 py-3 rounded-xl font-bold active:bg-secondary"
